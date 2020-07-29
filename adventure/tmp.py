@@ -2,8 +2,37 @@ from player import Player
 from room import Room
 from world import World
 from queue import Queue
+from ast import literal_eval
+
+map_file = "maps/test_line.txt"
+
+def enqueue_moves(player, moves_queue):
+    # add all the moves to the moves queue
+    # set up some current rooms exits
+    # create a list of unexplored exits
+
+    # for each direction in the current rooms exits
+        # check if the data at the current rooms exit is a "?"
+            # if so append the direction to unexplored exits
+    
+    # if the unexplored exits are empty
+        # create a path to enexplored by backtracking
+        # room on path will be current room id
+        # for each next room in the path to the unexplored room
+            # for each direction in the room on path (exits)
+                # check if we have found a room to traverse (next room)
+                 # if so append the direction to the moves queue
+                 # increment the room on path to the next room
+                 # and break out of the loop
+    # otherwise
+        # enqueue the unexplored exits with random sample to the moves queue to move in a random direction
+        
+    pass
 
 world = World()
+# Loads the map into a dictionary
+room_graph=literal_eval(open(map_file, "r").read())
+world.load_graph(room_graph)
 player = Player(world.starting_room)
 inverse_directions = {"n": "s", "s": "n", "e": "w", "w": "e"}
 
@@ -58,13 +87,9 @@ while moves_queue.size() > 0:
     if moves_queue.size() == 0:
         enqueue_moves(player, moves_queue)
 
+print(graph)
 
 
 
-
-
-def enqueue_moves(player, moves_queue):
-    # add all the moves to the moves queue
-    pass
 
 
