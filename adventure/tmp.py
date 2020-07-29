@@ -7,8 +7,26 @@ import random
 
 map_file = "maps/test_line.txt"
 
+# traversal with path
 def backtrack_to_unexplored_room(player, moves_queue):
     # get back to the old room with unexplored exits
+    # create a queue
+    # create a visited set
+    # enqueue the current room path
+    #while the queue is not empty
+        # dequeue the current path
+        # get the last room in the path
+        #if the last room has not been visited
+            # add the last room to visited set
+            # for each of the exits in the room
+                # if the last room exit is a "?"
+                    # return the path
+                # otherwise
+                    # duplicate the path
+                    # append the last room exit to the duplicated path
+                    # enqueue the duplicated path
+    
+    # if nothing was in the path then return an empty list
     return []
 
 def enqueue_moves(player, moves_queue):
@@ -42,7 +60,7 @@ def enqueue_moves(player, moves_queue):
                     moves_queue.enqueue(direction)
 
                     # increment the room on path to the next room
-                    room_graph = next_room
+                    room_on_path = next_room
                     # and break out of the loop
                     break
     # otherwise
