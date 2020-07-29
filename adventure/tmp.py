@@ -5,26 +5,45 @@ from queue import Queue
 from ast import literal_eval
 import random
 
-map_file = "maps/test_line.txt"
+# map_file = "maps/test_line.txt"
+# map_file = "maps/test_cross.txt"
+# map_file = "maps/test_loop.txt"
+# map_file = "maps/test_loop_fork.txt"
+map_file = "maps/main_maze.txt"
 
 # traversal with path
 def backtrack_to_unexplored_room(player, moves_queue):
     # get back to the old room with unexplored exits
     # create a queue
+    q = Queue()
     # create a visited set
+    visited = set()
     # enqueue the current room path
+    q.enqueue([player.current_room.id])
     #while the queue is not empty
+    while q.size() > 0:
         # dequeue the current path
+        path = q.dequeue()
         # get the last room in the path
+        last_room = path[-1]
         #if the last room has not been visited
+        if last_room not in visited:
             # add the last room to visited set
+            visited.add(last_room)
             # for each of the exits in the room
+            for exit in graph[last_room]:
                 # if the last room exit is a "?"
+                if graph[last_room][exit] == "?":
                     # return the path
+                    return path
                 # otherwise
+                else:
                     # duplicate the path
+                    path_copy = list(path)
                     # append the last room exit to the duplicated path
+                    path_copy.append(graph[last_room][exit])
                     # enqueue the duplicated path
+                    q.enqueue(path_copy)
     
     # if nothing was in the path then return an empty list
     return []
@@ -128,3 +147,4 @@ while moves_queue.size() > 0:
 
 print(graph)
 print(total_moves)
+print(len(total_moves))
