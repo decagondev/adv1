@@ -3,31 +3,52 @@ from room import Room
 from world import World
 from queue import Queue
 from ast import literal_eval
+import random
 
 map_file = "maps/test_line.txt"
+
+def backtrack_to_unexplored_room(player, moves_queue):
+    # get back to the old room with unexplored exits
+    return []
 
 def enqueue_moves(player, moves_queue):
     # add all the moves to the moves queue
     # set up some current rooms exits
+    current_room_exits = graph[player.current_room.id]
     # create a list of unexplored exits
+    unexplored_exits = []
 
     # for each direction in the current rooms exits
+    for direction in current_room_exits:
         # check if the data at the current rooms exit is a "?"
+        if current_room_exits[direction] == "?":
             # if so append the direction to unexplored exits
+            unexplored_exits.append(direction)
     
     # if the unexplored exits are empty
+    if len(unexplored_exits) == 0:
         # create a path to enexplored by backtracking
+        path_to_unexplored_room = backtrack_to_unexplored_room(player, moves_queue)
         # room on path will be current room id
+        room_on_path = player.current_room.id
+
         # for each next room in the path to the unexplored room
+        for next_room in path_to_unexplored_room:
             # for each direction in the room on path (exits)
+            for direction in graph[room_on_path]:
                 # check if we have found a room to traverse (next room)
-                 # if so append the direction to the moves queue
-                 # increment the room on path to the next room
-                 # and break out of the loop
+                if graph[room_on_path][direction] == next_room:
+                    # if so enqueue the direction to the moves queue
+                    moves_queue.enqueue(direction)
+
+                    # increment the room on path to the next room
+                    room_graph = next_room
+                    # and break out of the loop
+                    break
     # otherwise
+    else:
         # enqueue the unexplored exits with random sample to the moves queue to move in a random direction
-        
-    pass
+        moves_queue.enqueue(unexplored_exits[random.randint(0, len(unexplored_exits) - 1)])  
 
 world = World()
 # Loads the map into a dictionary
@@ -88,8 +109,4 @@ while moves_queue.size() > 0:
         enqueue_moves(player, moves_queue)
 
 print(graph)
-
-
-
-
-
+print(total_moves)
